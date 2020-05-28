@@ -58,7 +58,9 @@ function calculate(x_values, y_values) {
             x_values.push(v)
             y_values.push((b0 + b1 * v).toFixed(2))
             pred_y_values.push((b0 + b1 * v).toFixed(2))
-            y_input.value = y_input.value + ',' + (b0 + b1 * v).toFixed(2)
+            if (append_pred.checked) {
+                y_input.value = y_input.value + ',' + (b0 + b1 * v).toFixed(2)
+            }
         }
     }
 
@@ -81,7 +83,7 @@ function calculate(x_values, y_values) {
 function drawChart(x_values, y_values, b0, b1, pred_x, pred_y) {
     // Emptying the datasets on the plot for new data
     chart.data.datasets = []
-    chart.update()
+    chart.update(0)
 
     // Creating (x,y) objects for the plot.
     let scatter_data = x_values.map((x, i) => {
