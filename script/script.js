@@ -56,9 +56,9 @@ function calculate(x_values, y_values) {
     if (pred_values.length > 0) {
         for (v of pred_values) {
             x_values.push(v)
-            y_values.push(Math.round(b0 + b1 * v))
-            pred_y_values.push(Math.round(b0 + b1 * v))
-            y_input.value = y_input.value + ', ' + Math.round(b0 + b1 * v)
+            y_values.push((b0 + b1 * v).toFixed(2))
+            pred_y_values.push((b0 + b1 * v).toFixed(2))
+            y_input.value = y_input.value + ',' + (b0 + b1 * v).toFixed(2)
         }
     }
 
