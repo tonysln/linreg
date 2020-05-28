@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="Linear regression calculator using the least squares method.">
+    <meta name="author" content="Anton Slavin">
+    <title>Linear Regression Calculator</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="style/bootstrap.min.css">
+</head>
+
+<body>
+
+    <main>
+        <div class="container mb-2">
+            <div class="row mt-4">
+                <div class="col">
+                    <h3>Linear Regression Calculator</h3>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p><em>Using the <a href="https://en.wikipedia.org/wiki/Least_squares">least squares</a>
+                            method.</em></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <p>Insert your data as comma-separated values <code>1, 2, 3</code> (spaces optional).<br>Any
+                        missing Y values
+                        will be predicted and added to the list.
+                    </p>
+                    <form>
+                        <div class="form-group">
+                            <label for="x_input">X Values</label>
+                            <input class="form-control mb-3" type="text" placeholder="" id='x_input'>
+                            <label for="y_input">Y Values</label>
+                            <input class="form-control mb-3" type="text" placeholder="" id='y_input'>
+                            <button type="button" class="btn btn-primary mr-2" id='calculate'
+                                onclick="processData()">Calculate</button>
+                        </div>
+                    </form>
+                    <div>
+                        <p class='mt-4'>Results:</p>
+                        <p class='text-monospace' id='result_p'>-</p>
+                        <p class='mt-4'>Predicted values:</p>
+                        <p class='text-monospace' id='pred_p'>-</p>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 text-center">
+                    <canvas id="chart" height="240px"></canvas>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class='text-muted'>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <hr>
+                    <p class='small'>Created by <a href="https://github.com/tonysln">Anton</a> in
+                        2020.
+                        Using
+                        <a href="https://getbootstrap.com/">Bootstrap</a> and <a
+                            href="http://chartjs.org/">Chart.js</a>.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chart.js -->
+    <script src="script/Chart.min.js"></script>
+    <!-- Calculation and drawing script -->
+    <script src="script/script.js"></script>
+    <!-- Setup script -->
+    <script>
+        const ctx = document.getElementById('chart').getContext('2d')
+        const x_input = document.getElementById('x_input')
+        const y_input = document.getElementById('y_input')
+        const res = document.getElementById('result_p')
+        const pred = document.getElementById('pred_p')
+
+        // Setting up the chart.
+        chart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: []
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {},
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Y Values"
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {},
+                        scaleLabel: {
+                            display: true,
+                            labelString: "X Values"
+                        }
+                    }]
+                }
+            }
+        });
+
+        function processData() {
+            let x_val = x_input.value
+            let y_val = y_input.value
+
+            // Converting the inserted values into arrays and sending them off to calculations.
+            // A minimum of two X values and two Y values must be inserted, hence the length check.
+            if (x_val.length >= 3 && y_val.length >= 3) {
+                x_val = x_val.split(",")
+                for (let i = 0; i < x_val.length; i++) {
+                    x_val[i] = parseFloat(x_val[i].trim())
+                }
+
+                y_val = y_val.split(",")
+                for (let i = 0; i < y_val.length; i++) {
+                    y_val[i] = parseFloat(y_val[i].trim())
+                }
+
+                if (x_val.length >= y_val.length) {
+                    calculate(x_val, y_val);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
