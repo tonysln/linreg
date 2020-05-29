@@ -58,9 +58,9 @@ function calculate(x_values, y_values) {
             x_values.push(v)
             y_values.push((b0 + b1 * v).toFixed(2))
             pred_y_values.push((b0 + b1 * v).toFixed(2))
-            if (append_pred.checked) {
-                y_input.value = y_input.value + ',' + (b0 + b1 * v).toFixed(2)
-            }
+            // if (append_pred.checked) {
+            //     y_input.value = y_input.value + ',' + (b0 + b1 * v).toFixed(2)
+            // }
         }
     }
 
